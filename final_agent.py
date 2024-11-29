@@ -142,8 +142,8 @@ def query_translation(question: str, n: int = 3) -> List[str]:
     result = completion.choices[0].message.content.split(" ")
 
     print("Query Translation")
-    for answer in result:
-        print(answer)
+    # for answer in result:
+    #     # print(answer)
 
     return result
 # 假设 load_documents 函数
@@ -206,7 +206,7 @@ if __name__ == '__main__':
         answer = search_document(document, template_question) 
         file_token += str(doc_index) + ':'+ answer +"   " 
     template_answer = answer_question_based_on_summary(file_token, question) 
-    print("对于问题："+question+"\n帮您在以下文档寻找:"+file_paths[int(template_answer)]) 
+    # print("对于问题："+question+"\n帮您在以下文档寻找:"+file_paths[int(template_answer)]) 
 
     content_selected = read_document(file_paths[int(template_answer)])
 
@@ -224,4 +224,4 @@ if __name__ == '__main__':
             {'role': 'user', 'content': final_template}
         ]
     )
-    print("\n对于您的问题，回答是："+response.choices[0].message.content)
+    print("\n对于您的问题，回答是：\n"+response.choices[0].message.content)
