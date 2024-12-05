@@ -1,5 +1,6 @@
 from openai import OpenAI
 import os
+import re
 
 # 初始化OpenAI客户端
 client = OpenAI(
@@ -151,6 +152,7 @@ def load_documents_from_folder(directory_path,folder_name):
     file_paths = []
     
     # 构建文件夹的完整路径
+    # folder_name = "计算机网络"
     folder_path = os.path.join(directory_path, folder_name)
     documents = {}
     idx = 0
@@ -186,12 +188,14 @@ if __name__ == '__main__':
 
     # 示例问题
     question = input("请输入您的问题: ")
+    # question = "网络安全主要目标包括什么"
 
     # 文档存放路径
-    directory_path = "文档"  
+    directory_path = "文件"  
 
     folders = get_folder_names(directory_path)
     folder_name = file_routing(folders, question)
+    folder_name = re.search(r"[\u4e00-\u9fa5]+", folder_name).group()
     # 加载文档
     file_paths, documents = load_documents_from_folder(directory_path,folder_name)
 
@@ -220,7 +224,7 @@ if __name__ == '__main__':
     response = client.chat.completions.create(
         model="qwen-coder-turbo",
         messages=[
-            {'role': 'system', 'content': 'You are an expert on computer system.'},
+            {'role': 'system', 'content': 'You are an expert on computer science.'},
             {'role': 'user', 'content': final_template}
         ]
     )
